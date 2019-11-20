@@ -6,6 +6,7 @@
       "reward": "Reward",
       "movement": "Movement",
       "masternodes": "Masternodes",
+      "maxnodes": "Maxnodes",
       "network": "Network",
       "difficulty": "Difficulty",
       "richlist": "Top 100",
@@ -24,9 +25,11 @@
         "H": " (H/s)"
       },
       "difficulty": "Difficulty",
-      "masternode": "Master Node",
-      "masternode_plural": "Master Nodes",
-      "coin_supply": "Coin Supply ({{coin, uppercase}})",
+      "masternode": "Masternode",
+      "masternode_plural": "Masternodes",
+      "maxnode": "Maxnode",
+      "maxnode_plural": "Maxnodes",
+      "coin_supply": "Coin Supply",
       "coin_price": "{{exchange, uppercase}} Price"
     },
     "search": {
@@ -102,10 +105,22 @@
   "masternodes": {
     "info": "This is a list of all last seen Master Nodes currently on the network from current to last",
     "masternode": "Masternodes",
-    "rank": "Pay rank",
-    "protocol": "Protocol",
+    "rank": "Rank",
+    "protocol": "Network",
     "address": "Address",
-    "sub_version": "Sub-Version",
+    "sub_version": "Protocol",
+    "last_seen": "Last seen",
+    "last_paid": "Last paid",
+    "active_since": "Active since",
+    "status": "Status"
+  },
+  "maxnodes": {
+    "info": "This is a list of all last seen Master Nodes currently on the network from current to last",
+    "masternode": "Masternodes",
+    "rank": "Rank",
+    "protocol": "Network",
+    "address": "Address",
+    "sub_version": "Protocol",
     "last_seen": "Last seen",
     "last_paid": "Last paid",
     "active_since": "Active since",
@@ -143,7 +158,9 @@
     "api_getconnectioncount": "getconnectioncount",
     "api_getconnectioncount_info": "Returns the number of connections the block explorer has to other nodes.",
     "api_getmasternodecount": "getmasternodecount",
-    "api_getmasternodecount_info": "Returns the total number of master nodes on the network.",
+    "api_getmasternodecount_info": "Returns the total number of masternodes on the network.",
+    "api_getmaxnodecount": "getmaxnodecount",
+    "api_getmaxnodecount_info": "Returns the total number of maxnodes on the network.",
     "api_getblockcount": "getblockcount",
     "api_getblockcount_info": "Returns the current block index.",
     "api_getblockhash": "getblockhash [index]",
@@ -184,7 +201,9 @@
     "api_getlasttxs_info": "Returns last [count] transactions greater than [min]",
     "api_getlasttxs_return_satoshi": "Note: returned values are in satoshis!",
     "api_getmasternodelist": "getmasternodelist",
-    "api_getmasternodelist_info": "Returns the number of master nodes on the network that are currently online.",
+    "api_getmasternodelist_info": "Returns the number of masternodes on the network that are currently online.",
+    "api_getmaxnodelist": "getmaxnodelist",
+    "api_getmaxnodelist_info": "Returns the number of maxnodes on the network that are currently online.",
     "api_calls_get": "Linking (GET)",
     "api_calls_get_info": "Linking to the block explorer.",
     "apt_get_transaction": "Transaction (/tx/txid)",
@@ -277,9 +296,9 @@
   "language": {
     "us": "English",
     "de": "Deutsch",
-    "fr": "Français",
-    "ru": "Pусский",
-    "es": "Español",
+    "fr": "FranÃ§ais",
+    "ru": "PÑƒÑÑÐºÐ¸Ð¹",
+    "es": "EspaÃ±ol",
     "it": "Italiano"
   }
 }

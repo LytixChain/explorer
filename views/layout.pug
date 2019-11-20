@@ -1,7 +1,3 @@
-if (location.protocol != 'https:')
-{
- location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-}
 doctype html
 html
   head
@@ -33,12 +29,14 @@ html
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(json.data[0].supply);
             $("#masternodeCountOnline").text(json.data[0].masternodeCountOnline);
-            $("#masternodeCountOffline").text(json.data[0].masternodeCountOffline);
+            $("#masternodeCountTotal").text(json.data[0].masternodeCountTotal);
+            $("#maxnodeCountOnline").text(json.data[0].maxnodeCountOnline);
+            $("#maxnodeCountTotal").text(json.data[0].maxnodeCountTotal);
             $("#difficulty").text(json.data[0].difficulty);
             $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
             $("#hashrate").text(json.data[0].hashrate);
             $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
-            $("#lblConnections").text(json.data[0].connections + 'connections');
+            $("#lblConnections").text(json.data[0].connections + ' connections');
             $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
             $("#lblX1").text(' ');
           }});
@@ -60,7 +58,7 @@ html
         });
         setInterval( function() {
           update_stats();
-        }, 60000);
+        }, 10000);
         update_stats();
       });
   body
@@ -119,6 +117,11 @@ html
                 a.navbar-link(href='/masternodes')
                   span.fa.fa-share-alt
                   span.menu-text= t('layout.navigation.masternodes')
+            if settings.display.maxnodes == true
+              li#maxnodes
+                a.navbar-link(href='/maxnodes')
+                  span.fa.fa-share-alt
+                  span.menu-text= t('layout.navigation.maxnodes')
             if settings.display.network == true
               li#network
                 a.navbar-link(href='/network')
@@ -141,7 +144,7 @@ html
                   span.menu-text= t('layout.navigation.api')
 
           ul.nav.navbar-nav.navbar-right
-            a(href='https://primestone.global')
+            a(href='https://www.lytixchain.org/')
               img(src="/images/logo-top.png")
 
     .col-md-12
@@ -160,29 +163,28 @@ html
                 else
                   label#hashrate -
         .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong= t('layout.stats.difficulty')
-            .panel-body
-              #difficultypanel
-                span.glyphicon.fa.fa-sliders
-                if settings.index.difficulty == 'Hybrid'
-                  label#difficulty -
-                  <br>
-                  label#difficultyHybrid -
-                else
-                  label#difficulty -
-        .col-md-2
          .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
               strong= t('layout.stats.masternode',{count: 0 })
             .panel-body
               #masternodepanel
-                span.glyphicon.fa.fa-exclamation-triangle
-                label#masternodeCountOffline -
+                span.glyphicon.fa.fa-check-circle
+                label#masternodeCountTotal -
                 label &nbsp;&#x2F;&nbsp;        
                 label#masternodeCountOnline -
+                span.glyphicon.fa.fa-arrow-up
+        .col-md-2
+         .panel.panel-default.hidden-sm.hidden-xs
+            .panel-heading
+              strong= t('layout.stats.maxnode',{count: 0 })
+            .panel-body
+              #maxnodepanel
                 span.glyphicon.fa.fa-check-circle
+                label#maxnodeCountTotal -
+                label &nbsp;&#x2F;&nbsp;        
+                label#maxnodeCountOnline -
+                span.glyphicon.fa.fa-arrow-up
+				
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
@@ -218,6 +220,26 @@ html
     block content
     .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
       .col-md-4
+        if settings.display.website
+          ul.nav.navbar-nav
+            li.pull-left
+              a#website-icon(target='_blank' , href=settings.website)
+                span.glyphicon.fa.fa-link
+        if settings.display.discord
+          ul.nav.navbar-nav
+            li.pull-left
+              a#discord-icon(target='_blank' , href="https://discord.gg/" + settings.discord )
+                span.glyphicon.fa.fa-comments
+        if settings.display.twitter
+          ul.nav.navbar-nav
+            li.pull-left
+              a#twitter-icon(target='_blank', href="https://twitter.com/" + settings.twitter )
+                span.glyphicon.fa.fa-twitter
+        if settings.display.bitcointalk
+          ul.nav.navbar-nav
+            li.pull-left
+              a#bitcointalk-icon( target='_blank' , href="https://bitcointalk.org/index.php?topic=" + settings.bitcointalk )
+                span.glyphicon.fa.fa-btc
         if settings.display.github
           ul.nav.navbar-nav
             li.pull-left
@@ -228,36 +250,16 @@ html
             li.pull-left
               a#slack-icon(target='_blank' , href=settings.slack )
                 span.glyphicon.fa.fa-slack
-        if settings.display.twitter
-          ul.nav.navbar-nav
-            li.pull-left
-              a#twitter-icon(target='_blank', href="https://twitter.com/" + settings.twitter )
-                span.glyphicon.fa.fa-twitter
         if settings.display.facebook
           ul.nav.navbar-nav
             li.pull-left
               a#facebook-icon(target='_blank', href="https://www.facebook.com/" + settings.facebook)
                 span.glyphicon.fa.fa-facebook
-        if settings.display.discord
-          ul.nav.navbar-nav
-            li.pull-left
-              a#discord-icon(target='_blank' , href="https://discord.gg/" + settings.discord )
-                span.glyphicon.fa.fa-comments
         if settings.display.googleplus
           ul.nav.navbar-nav
             li.pull-left
               a#googleplus-icon( target='_blank' , href="https://plus.google.com/" + settings.googleplus )
                 span.glyphicon.fa.fa-google-plus
-        if settings.display.bitcointalk
-          ul.nav.navbar-nav
-            li.pull-left
-              a#bitcointalk-icon( target='_blank' , href="https://bitcointalk.org/index.php?topic=" + settings.bitcointalk )
-                span.glyphicon.fa.fa-btc
-        if settings.display.website
-          ul.nav.navbar-nav
-            li.pull-left
-              a#website-icon(target='_blank' , href=settings.website)
-                span.glyphicon.fa.fa-link
       .col-md-4
         ul.nav
           li.text-center(style='margin-left:80px;margin-right:80px;')

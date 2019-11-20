@@ -71,13 +71,15 @@
     "facebook": false,
     "googleplus": false,
     "bitcointalk": true,
+    "discord": true,
     "website": true,
     "slack": false,
     "github": true,
     "search": true,
     "movement": true,
     "network": true,
-    "masternodes":true			   
+    "masternodes":true,
+    "maxnodes":true				   
   },
 
   // index page (valid options for difficulty are POW, POS or Hybrid)
