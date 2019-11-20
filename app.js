@@ -14,29 +14,14 @@ var express = require('express')
   , i18Backend = require('i18next-node-fs-backend')
   , request = require('request');
 
-// Add this section code to here
-var forceSSL = require('express-force-ssl');
-var https = require('https');
-var fs = require('fs');
-var ssl_options = {
-  key: fs.readFileSync('./cert/server.key'),
-  cert: fs.readFileSync('./cert/server.crt'),
-  ca: fs.readFileSync('./cert/server.ca')
-};
-// Add this section code to here
-
 var app = express();
-
-// Add this section code to here
-var secureServer = https.createServer(ssl_options, app);
-// Add this section code to here
 
 // chaincoinapi
 chaincoinapi.setWalletDetails(settings.wallet);
 if (settings.heavy != true) {
-  chaincoinapi.setAccess('only', ['getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount',
+  chaincoinapi.setAccess('only', ['getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount', 'getmaxnodecount', 'getmaxnodecountonline', 'getmaxnodelist',
   'getmasternodecount', 'getmasternodecountonline', 'getmasternodelist', 'getvotelist', 'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 
-  'getpeerinfo', 'gettxoutsetinfo','listmasternodes']);
+  'getpeerinfo', 'gettxoutsetinfo','listmasternodes','listmaxnodes']);
 } else {
   // enable additional heavy api calls
   /*
@@ -50,10 +35,10 @@ if (settings.heavy != true) {
     getsupply - Returns the current money supply.
     getmaxmoney - Returns the maximum possible money supply.
   */
-  chaincoinapi.setAccess('only', ['getinfo', 'getstakinginfo', 'getnetworkhashps', 'getdifficulty', 'getconnectioncount',
+  chaincoinapi.setAccess('only', ['getinfo', 'getstakinginfo', 'getnetworkhashps', 'getdifficulty', 'getconnectioncount', 'getmaxnodecount', 'getmaxnodecountonline', 'getmaxnodelist',
     'getmasternodecount', 'getmasternodecountonline', 'getmasternodelist', 'getvotelist', 'getblockcount', 'getblockhash', 
     'getblock', 'getrawtransaction', 'getmaxmoney', 'getvote', 'getmaxvote', 'getphase', 'getreward', 'getpeerinfo', 
-    'getnextrewardestimate', 'getnextrewardwhenstr', 'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo','listmasternodes']);
+    'getnextrewardestimate', 'getnextrewardwhenstr', 'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo','listmasternodes','listmaxnodes']);
 }
 // Language setup
 i18next
@@ -177,6 +162,13 @@ app.use('/ext/getmasternodes', function(req, res) {
    });
 });
 
+//Maxnodes 
+app.use('/ext/getmaxnodes', function(req, res) {
+   db.get_maxnodes(function(maxnode){
+    res.send({data: maxnode});
+   });
+});
+
 // locals
 app.set('title', settings.title);
 app.set('symbol', settings.symbol);
@@ -232,8 +224,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-// Add below line here
-secureServer.listen(443);
 
 module.exports = app;

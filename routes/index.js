@@ -3,8 +3,9 @@ var express = require('express')
   , settings = require('../lib/settings')
   , db = require('../lib/database')
   , lib = require('../lib/explorer')
-  , qr = require('qr-image');
-
+  , qr = require('qr-image')
+  , formatNum = require('format-num');
+ 
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
     if (block != 'There was an error. Check your console.') {
@@ -197,6 +198,11 @@ router.get('/masternodes', function(req, res) {
     res.render('masternodes', {active: 'masternodes'});
 });
 
+// Maxnodelist
+router.get('/maxnodes', function(req, res) {
+    res.render('maxnodes', {active: 'maxnodes'});
+});
+
 
 router.get('/reward', function(req, res){
   //db.get_stats(settings.coin, function (stats) {
@@ -301,24 +307,29 @@ router.get('/ext/summary', function(req, res) {
     lib.get_hashrate(function(hashrate) {
       lib.get_connectioncount(function(connections){
         lib.get_masternodecount(function(masternodestotal){
+          lib.get_maxnodecount(function(maxnodestotal){
             lib.get_blockcount(function(blockcount) {
               db.get_stats(settings.coin, function (stats) {
                 if (hashrate == 'There was an error. Check your console.') {
                   hashrate = 0;
                 }
                 var masternodesoffline = Math.floor(masternodestotal.total - masternodestotal.enabled);
+                var maxnodesoffline = Math.floor(maxnodestotal.total - maxnodestotal.enabled);
                 res.send({ data: [{
                   difficulty: difficulty,
                   difficultyHybrid: difficultyHybrid,
-                  supply: stats.supply,
+                  supply: formatNum(stats.supply, { maxFraction: 0 }),
                   hashrate: hashrate,
                   lastPrice: stats.last_price,
                   connections: connections,
                   masternodeCountOnline: masternodestotal.enabled,
-                  masternodeCountOffline: masternodesoffline,
+                  masternodeCountTotal: masternodestotal.total,
+                  maxnodeCountOnline: maxnodestotal.enabled,
+                  maxnodeCountTotal: maxnodestotal.total,
                   blockcount: blockcount
                 }]});
               });
+            });
           });
         });
       });

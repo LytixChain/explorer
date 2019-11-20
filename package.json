@@ -17,6 +17,7 @@
     "pug": "~2.0.3",
     "chaincoin-node-api": "1.0.4",
     "request": "2.87.0",
+    "format-num": "^1.0.0",					 
     "jsonminify": "0.4.1",
     "mongodb": "3.1.1",
     "mongoose": "5.2.3",

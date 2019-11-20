@@ -12,6 +12,7 @@ var StatsSchema = new Schema({
   connections: { type: Number, default: 0 },
   last_price: { type: Number, default: 0 },
   list_masternode_update: { type: Number, default: 0 },
+  list_maxnode_update: { type: Number, default: 0 },
   list_network_update: { type: Number, default: 0 },
   list_blockchain_update: { type: Number, default: 0 },
   list_market_update: { type: Number, default: 0 },

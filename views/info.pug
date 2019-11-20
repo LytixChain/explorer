@@ -39,6 +39,13 @@ block content
               em= t("api.api_getmasternodecount_info")
               br
               a(href='/api/getmasternodecount') #{address}/api/getmasternodecount
+          li
+            p
+              strong= t("api.api_getmaxnodecount")
+              br
+              em= t("api.api_getmaxnodecount_info")
+              br
+              a(href='/api/getmaxnodecount') #{address}/api/getmaxnodecount
           
           li
             p
@@ -203,6 +210,15 @@ block content
                 em= t("api.api_getmasternodelist_info")
                 br
                 a(href='/ext/getmasternodes') #{address}/ext/getmasternodes
+				
+            if settings.display.maxnodes == true
+             li
+              p
+                strong= t("api.api_getmaxnodelist")
+                br
+                em= t("api.api_getmaxnodelist_info")
+                br
+                a(href='/ext/getmaxnodes') #{address}/ext/getmaxnodes
 
         hr                                         
         h3= t("api.api_calls_get")
